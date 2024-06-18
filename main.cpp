@@ -3,7 +3,7 @@
 using namespace std;
 
 int main() {
-    int key;
+    int choice, key;
     string text;
 
     void* handle = dlopen("/Users/olenapopova/Documents/GitHub/Caesar-Encryption-Algorithm/caesar_atgorithm.dylib", RTLD_LAZY);
@@ -28,16 +28,41 @@ int main() {
         return 1;
     }
 
-    cout << "Enter the text: ";
-    getline(cin, text);
-    cout << "Enter the key: ";
-    cin >> key;
+    while (true) {
+        cout << "Do you want to (1) Encrypt or (2) Decrypt? ";
+        cin >> choice;
 
-    string encrypted_text = encryption(text, key);
-    cout << "Encrypted text: " << encrypted_text << endl;
+        if (choice == 1) {
+            cout << "Enter the text: ";
+            cin.ignore(); // ignore the newline character left in the input buffer
+            getline(cin, text);
+            cout << "Enter the key: ";
+            cin >> key;
 
-    string decrypted_text = decryption(encrypted_text, key);
-    cout << "Decrypted text: " << decrypted_text << endl;
+            string encrypted_text = encryption(text, key);
+            cout << "Encrypted text: " << encrypted_text << endl;
+        } else if (choice == 2) {
+            cout << "Enter the text: ";
+            cin.ignore(); // ignore the newline character left in the input buffer
+            getline(cin, text);
+            cout << "Enter the key: ";
+            cin >> key;
+
+            string decrypted_text = decryption(text, key);
+            cout << "Decrypted text: " << decrypted_text << endl;
+        } else {
+            cout << "Invalid choice. Please try again." << endl;
+            continue;
+        }
+
+        cout << "Do you want to continue? (y/n) ";
+        char response;
+        cin >> response;
+
+        if (response == 'n') {
+            break;
+        }
+    }
 
     dlclose(handle);
 
